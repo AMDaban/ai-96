@@ -1,5 +1,6 @@
-from . import resource_manager, constants
+from . import resource_manager, constants, excel_generator
 from copy import deepcopy
+
 
 initial_state = None
 
@@ -12,7 +13,7 @@ def create_initial_state():
     create_data_structure()
     fill_initial_state()
 
-    print(initial_state)
+    excel_generator.create_result(initial_state, "resources/result.xlsx")
 
 
 def create_data_structure():
@@ -30,44 +31,54 @@ def fill_initial_state():
 
     professors_free_time_count_map = resource_manager.get_professors_free_time_count()
     temp_professors_free_time_map = deepcopy(resource_manager.free_times_map)
-
     temp_subject_list = deepcopy(resource_manager.get_subjects())
+
     for subject in temp_subject_list:
         subject_masters = resource_manager.get_masters_for(subject)
+        is_subject_assigned = False
         for master in subject_masters:
-            if professors_free_time_count_map.get(master) >= 2:
-                assigned_slots = 0
+            if not is_subject_assigned:
+                if professors_free_time_count_map.get(master) >= 2:
+                    is_subject_assigned = True
 
-                for day in temp_professors_free_time_map.get(master):
-                    for slot in temp_professors_free_time_map.get(master).get(day):
-                        if assigned_slots < 2:
-                            if temp_professors_free_time_map.get(master).get(day).get(slot) != 0:
-                                free_classes = get_free_classes(initial_state, constants.week_days_map.get(day), slot)
-                                if free_classes != set([]):
-                                    temp_tuple = (free_classes.pop(), master, subject)
-                                    initial_state.get(constants.week_days_map.get(day)).get(slot).append(temp_tuple)
-                                    assigned_slots = assigned_slots + 1
-                                    professors_free_time_count_map.update({
-                                        master: professors_free_time_count_map.get(master) - 1
-                                    })
+                    assigned_slots = 0
+                    for day in temp_professors_free_time_map.get(master):
+                        for slot in temp_professors_free_time_map.get(master).get(day):
+                            if assigned_slots < 2:
+                                if temp_professors_free_time_map.get(master).get(day).get(slot) != 0:
+                                    free_classes = get_free_classes(
+                                        initial_state,
+                                        constants.week_days_map.get(day),
+                                        slot
+                                    )
+                                    if free_classes != set([]):
+                                        temp_tuple = (free_classes.pop(), master, subject)
+                                        initial_state.get(constants.week_days_map.get(day)).get(slot).append(temp_tuple)
+                                        assigned_slots = assigned_slots + 1
+                                        professors_free_time_count_map.update({
+                                            master: professors_free_time_count_map.get(master) - 1
+                                        })
+                                        temp_professors_free_time_map.get(master).get(day).update({
+                                            slot: 0
+                                        })
 
-                for day in temp_professors_free_time_map.get(master):
-                    for slot in temp_professors_free_time_map.get(master).get(day):
-                        if assigned_slots < 2:
-                            if temp_professors_free_time_map.get(master).get(day).get(slot) != 0:
-                                free_classes = get_free_classes(initial_state, constants.week_days_map.get(day), slot)
-                                temp_tuple = (free_classes.pop(), master, subject)
-                                initial_state.get(constants.week_days_map.get(day)).get(slot).append(temp_tuple)
-                                assigned_slots = assigned_slots + 1
-                                professors_free_time_count_map.update({
-                                    master: professors_free_time_count_map.get(master) - 1
-                                })
+                    if assigned_slots < 2:
+                        for day in temp_professors_free_time_map.get(master):
+                            for slot in temp_professors_free_time_map.get(master).get(day):
+                                if assigned_slots < 2:
+                                    if temp_professors_free_time_map.get(master).get(day).get(slot) != 0:
+                                        temp_tuple = ((deepcopy(resource_manager.classes_set)).pop(), master, subject)
+                                        initial_state.get(constants.week_days_map.get(day)).get(slot).append(temp_tuple)
+                                        assigned_slots = assigned_slots + 1
+                                        professors_free_time_count_map.update({
+                                            master: professors_free_time_count_map.get(master) - 1
+                                        })
+                                        temp_professors_free_time_map.get(master).get(day).update({
+                                            slot: 0
+                                        })
 
 
 def get_free_classes(state, day, slot):
     filled_classes = set([class_professor_subject[0] for class_professor_subject in state.get(day).get(slot)])
     all_classes = deepcopy(resource_manager.classes_set)
     return all_classes - filled_classes
-
-
-

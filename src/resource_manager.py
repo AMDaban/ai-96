@@ -14,12 +14,6 @@ def load_resources(professor_skills, classes, subjects, free_times):
     load_subjects(subject_file_name=subjects)
     load_free_times(free_times_file_name=free_times)
 
-    # print(professor_skills_map)
-    # print(lessons_list)
-    # print(classes_set)
-    # print(subject_set)
-    # print(free_times_map)
-
 
 def load_professor_skills(professor_skills_file_name):
     global professor_skills_map, lessons_list
@@ -212,3 +206,4 @@ def get_professor_free_time(professor):
         return free_times_map.get(professor, None)
     else:
         return None
+
