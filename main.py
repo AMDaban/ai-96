@@ -1,4 +1,4 @@
-from src import resource_manager
+from src import resource_manager, core
 
 resource_manager.load_resources(
     professor_skills="resources/Prof_Skill.xlsx",
@@ -8,3 +8,4 @@ resource_manager.load_resources(
 )
 
 
+core.start_processing()
