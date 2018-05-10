@@ -16,3 +16,14 @@ week_days_map_reverse = {
     "su": "Sunday",
     "mo": "Monday"
 }
+
+result_file_column_width = 35
+subject_shuffle_threshold = 500
+max_algorithm_depth = 100
+swapping_limit = 500
+
+p_w = 10
+c_w = 5
+f_w = 2
+
+infinity = 100000000

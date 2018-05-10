@@ -5,9 +5,22 @@ initial_state = None
 
 
 def start_processing():
+    global initial_state
+
     create_initial_state()
 
-    algorithm.get_next_state(initial_state)
+    depth = 0
+    while depth < constants.max_algorithm_depth:
+        next_state = algorithm.get_next_state(initial_state)
+
+        if next_state is None:
+            break
+        else:
+            initial_state = deepcopy(next_state)
+
+        depth += 1
+
+    print("result generated")
     create_result_excel_file()
 
 

@@ -39,7 +39,7 @@ def create_result(state, result_file_name):
         vertical_offset += max_number_of_filled
 
     for col in ["A", "B", "C", "D", "E"]:
-        result_sheet.column_dimensions[col].width = 35
+        result_sheet.column_dimensions[col].width = constants.result_file_column_width
 
     for i in range(1, 40):
         result_sheet.cell(i, 1).alignment = Alignment(horizontal='center', vertical='center')
