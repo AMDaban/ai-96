@@ -1,4 +1,4 @@
-from openpyxl import load_workbook, Workbook
+from openpyxl import Workbook
 from . import constants
 from openpyxl.styles import Alignment
 
@@ -39,11 +39,13 @@ def create_result(state, result_file_name):
         vertical_offset += max_number_of_filled
 
     for col in ["A", "B", "C", "D", "E"]:
-        result_sheet.column_dimensions[col].width = 30
+        result_sheet.column_dimensions[col].width = 35
 
     for i in range(1, 40):
-        for j in range(1, 10):
-            result_sheet.cell(i, j).alignment = Alignment(horizontal='center', vertical='center')
+        result_sheet.cell(i, 1).alignment = Alignment(horizontal='center', vertical='center')
+
+    for j in range(1, 10):
+        result_sheet.cell(1, j).alignment = Alignment(horizontal='center', vertical='center')
 
     for i in range(2, 40):
         for j in range(2, 10):
@@ -54,4 +56,3 @@ def create_result(state, result_file_name):
 
 def to_string(item):
     return str(str(item[0]) + " " + item[1] + " " + item[2])
-
