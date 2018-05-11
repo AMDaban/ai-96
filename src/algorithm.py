@@ -170,5 +170,23 @@ def get_weighted_conflict_count(state):
                             .get(slot) != 1:
                         free_time_conflicts += 1
 
-    return \
-        professors_conflicts * constants.p_w + classes_conflicts * constants.c_w + free_time_conflicts * constants.f_w
+    # return \
+    #     professors_conflicts * constants.p_w + classes_conflicts * constants.c_w + free_time_conflicts * constants.f_w
+
+    p_zero = 0
+    c_zero = 0
+    f_zero = 0
+
+    if professors_conflicts != 0:
+        p_zero = 1
+
+    if classes_conflicts != 0:
+        c_zero = 1
+
+    if free_time_conflicts != 0:
+        f_zero = 1
+
+    return\
+        (constants.p_w ** professors_conflicts) * p_zero +\
+        (constants.c_w ** classes_conflicts) * c_zero +\
+        (constants.f_w ** free_time_conflicts) * f_zero

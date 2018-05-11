@@ -20,9 +20,6 @@ def start_processing():
 
         depth += 1
 
-    print("result generated")
-    create_result_excel_file()
-
 
 def create_initial_state():
     create_data_structure()
@@ -31,6 +28,7 @@ def create_initial_state():
 
 def create_result_excel_file():
     excel_generator.create_result(initial_state, "resources/result.xlsx")
+    print("best result so far generated")
 
 
 def create_data_structure():

@@ -22,8 +22,11 @@ subject_shuffle_threshold = 500
 max_algorithm_depth = 100
 swapping_limit = 500
 
-p_w = 10
+p_w = 7
 c_w = 5
 f_w = 2
 
 infinity = 100000000
+
+total_rounds = 1
+answer_threshold = 0
