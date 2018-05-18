@@ -101,6 +101,9 @@ def get_next_state(state):
         if (random_day_1, random_slot_1, random_index_1) == (random_day_2, random_slot_2, random_index_2):
             is_ok = False
 
+        if (random_day_1, random_slot_1) == (random_day_2, random_slot_2):
+            is_ok = False
+
         if is_ok:
             swapped_count += 1
             swaped_slots.add((random_day_1, random_slot_1, random_index_1, random_day_2, random_slot_2, random_index_2))

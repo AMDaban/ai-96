@@ -20,7 +20,7 @@ week_days_map_reverse = {
 result_file_column_width = 35
 subject_shuffle_threshold = 500
 max_algorithm_depth = 100
-swapping_limit = 500
+swapping_limit = 1000
 
 p_w = 7
 c_w = 5
